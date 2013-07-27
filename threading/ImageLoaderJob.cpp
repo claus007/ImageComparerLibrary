@@ -17,21 +17,36 @@ Copyright 2013 Claus Ilginnis <Claus@Ilginnis.de>
    
 */
 
-#ifndef IMAGECOMPARER_H
-#define IMAGECOMPARER_H
+#include "ImageLoaderJob.h"
+#include <QDebug>
 
-#include "imagecomparer_global.h"
-
-class QWidget;
-
-class IMAGECOMPARERSHARED_EXPORT ImageComparer
+ImageLoaderJob::ImageLoaderJob() :
+    ImageProcessorJob()
 {
-    
-public:
-    static void init();
-    static QWidget * newComparer(QString orgImage,QString newImage);
-private:
-    ImageComparer();
-};
+}
 
-#endif // IMAGECOMPARER_H
+QString ImageLoaderJob::fileName() const
+{
+    return _fileName;
+}
+
+void ImageLoaderJob::setFileName(const QString &fileName)
+{
+    _fileName = fileName;
+}
+
+void ImageLoaderJob::run()
+{
+    QImage * newImage=new QImage();
+
+    if ( newImage->load(_fileName) == false )
+    {
+        qDebug() << "Image NOT loaded: " << _fileName;
+        delete newImage;
+        emit done(NULL);
+        return;
+    }
+
+    qDebug() << "Image loaded: " << _fileName;
+    emit done(newImage);
+}

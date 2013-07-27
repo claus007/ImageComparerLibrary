@@ -17,21 +17,33 @@ Copyright 2013 Claus Ilginnis <Claus@Ilginnis.de>
    
 */
 
-#ifndef IMAGECOMPARER_H
-#define IMAGECOMPARER_H
+#ifndef IMAGERESIZEJOB_H
+#define IMAGERESIZEJOB_H
 
-#include "imagecomparer_global.h"
+#include "threading/ImageProcessorJob.h"
 
-class QWidget;
-
-class IMAGECOMPARERSHARED_EXPORT ImageComparer
+class ImageResizeJob : public ImageProcessorJob
 {
-    
+    Q_OBJECT
 public:
-    static void init();
-    static QWidget * newComparer(QString orgImage,QString newImage);
-private:
-    ImageComparer();
+    explicit ImageResizeJob();
+    
+    virtual void run();
+
+    const QImage *image() const;
+    void setImage(const QImage *image);
+
+    QSize destSize() const;
+    void setDestSize(const QSize &destSize);
+
+protected:
+    const QImage * _image;
+    QSize _destSize;
+
+signals:
+    
+public slots:
+    
 };
 
-#endif // IMAGECOMPARER_H
+#endif // IMAGERESIZEJOB_H

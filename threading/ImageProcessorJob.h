@@ -17,21 +17,29 @@ Copyright 2013 Claus Ilginnis <Claus@Ilginnis.de>
    
 */
 
-#ifndef IMAGECOMPARER_H
-#define IMAGECOMPARER_H
+#ifndef IMAGEPROCESSORJOB_H
+#define IMAGEPROCESSORJOB_H
 
-#include "imagecomparer_global.h"
+#include <QRunnable>
+#include <QObject>
+#include <QImage>
 
-class QWidget;
-
-class IMAGECOMPARERSHARED_EXPORT ImageComparer
+class ImageProcessorJob : public QObject, public QRunnable
 {
-    
+    Q_OBJECT
 public:
-    static void init();
-    static QWidget * newComparer(QString orgImage,QString newImage);
-private:
-    ImageComparer();
+    explicit ImageProcessorJob();
+
+
+
+    ImageProcessorJob *follower() const;
+    void setFollower(ImageProcessorJob *follower);
+
+signals:
+    void done(QImage * image);
+
+protected:
+    ImageProcessorJob * _follower;
 };
 
-#endif // IMAGECOMPARER_H
+#endif // IMAGEPROCESSORJOB_H

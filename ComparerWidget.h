@@ -26,6 +26,8 @@ namespace Ui {
 class ComparerWidget;
 }
 
+class QResizeEvent;
+
 class ComparerWidget : public QWidget
 {
     Q_OBJECT
@@ -34,8 +36,33 @@ public:
     explicit ComparerWidget(QWidget *parent = 0);
     ~ComparerWidget();
     
+    QString originalImageFilename() const;
+    void setOriginalImageFilename(const QString &originalImageFilename);
+
+    QString newImageFilename() const;
+    void setNewImageFilename(const QString &newImageFilename);
+
+protected:
+    virtual void resizeEvent(QResizeEvent *);
+protected slots:
+    void initialImageLoadADone(QImage * image);
+    void initialImageLoadBDone(QImage * image);
+    void imageResizedADone(QImage * image);
+    void imageResizedBDone(QImage * image);
 private:
     Ui::ComparerWidget *ui;
+
+    QString _originalImageFilename;
+    QString _newImageFilename;
+
+    QImage _originalImage;
+    QImage _newImage;
+
+    QImage _resizedOriginalImage;
+    QImage _resizedNewImage;
+
+    QImage _resultImage;
+    QImage _resizedResultImage;
 };
 
 #endif // COMPARERWIDGET_H

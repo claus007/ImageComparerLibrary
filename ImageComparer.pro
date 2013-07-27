@@ -14,11 +14,17 @@ TEMPLATE = lib
 DEFINES += IMAGECOMPARER_LIBRARY
 
 SOURCES += ImageComparer.cpp \
-    ComparerWidget.cpp
+    ComparerWidget.cpp \
+    threading/ImageProcessorJob.cpp \
+    threading/ImageLoaderJob.cpp \
+    threading/ImageResizeJob.cpp
 
 HEADERS += ImageComparer.h\
         imagecomparer_global.h \
-    ComparerWidget.h
+    ComparerWidget.h \
+    threading/ImageProcessorJob.h \
+    threading/ImageLoaderJob.h \
+    threading/ImageResizeJob.h
 
 unix:!symbian {
     maemo5 {
@@ -33,3 +39,6 @@ DESTDIR = ../build
 
 FORMS += \
     ComparerWidget.ui
+
+RESOURCES += \
+    alternateImages.qrc

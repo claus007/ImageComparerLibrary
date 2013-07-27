@@ -17,21 +17,27 @@ Copyright 2013 Claus Ilginnis <Claus@Ilginnis.de>
    
 */
 
-#ifndef IMAGECOMPARER_H
-#define IMAGECOMPARER_H
+#ifndef IMAGELOADERJOB_H
+#define IMAGELOADERJOB_H
 
-#include "imagecomparer_global.h"
+#include <threading/ImageProcessorJob.h>
 
-class QWidget;
-
-class IMAGECOMPARERSHARED_EXPORT ImageComparer
+class ImageLoaderJob : public ImageProcessorJob
 {
-    
+    Q_OBJECT
 public:
-    static void init();
-    static QWidget * newComparer(QString orgImage,QString newImage);
-private:
-    ImageComparer();
+    explicit ImageLoaderJob();
+    
+    QString fileName() const;
+    void setFileName(const QString &fileName);
+
+    virtual void run();
+signals:
+    
+public slots:
+    
+protected:
+    QString _fileName;
 };
 
-#endif // IMAGECOMPARER_H
+#endif // IMAGELOADERJOB_H

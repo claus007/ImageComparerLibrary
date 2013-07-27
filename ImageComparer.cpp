@@ -19,12 +19,37 @@ Copyright 2013 Claus Ilginnis <Claus@Ilginnis.de>
 
 #include "ImageComparer.h"
 #include "ComparerWidget.h"
+#include <QThreadPool>
+#include <QThread>
+
+void ImageComparer::init()
+{
+    int idealThreads=QThread::idealThreadCount();
+
+    // if no info thik its single processor
+    if ( idealThreads == -1 )
+        idealThreads = 1;
+
+    // there are also disk and network as ressources
+    idealThreads+=2;
+
+    QThreadPool *global=QThreadPool::globalInstance();
+
+    if ( global->maxThreadCount() < idealThreads )
+        global->setMaxThreadCount( idealThreads );
+}
 
 QWidget * ImageComparer::newComparer(QString orgImage, QString newImage)
 {
-    return new ComparerWidget();
+    ComparerWidget * result= new ComparerWidget();
+
+    result->setOriginalImageFilename(orgImage);
+    result->setNewImageFilename(newImage);
+
+    return result;
 }
 
 ImageComparer::ImageComparer()
 {
+
 }
