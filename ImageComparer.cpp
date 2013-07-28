@@ -43,8 +43,7 @@ QWidget * ImageComparer::newComparer(QString orgImage, QString newImage)
 {
     ComparerWidget * result= new ComparerWidget();
 
-    result->setOriginalImageFilename(orgImage);
-    result->setNewImageFilename(newImage);
+    result->setFilenames(orgImage,newImage);
 
     return result;
 }

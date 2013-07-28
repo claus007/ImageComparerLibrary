@@ -17,14 +17,16 @@ SOURCES += ImageComparer.cpp \
     ComparerWidget.cpp \
     threading/ImageProcessorJob.cpp \
     threading/ImageLoaderJob.cpp \
-    threading/ImageResizeJob.cpp
+    threading/ImageResizeJob.cpp \
+    threading/ImageDiffCalculatorJob.cpp
 
 HEADERS += ImageComparer.h\
         imagecomparer_global.h \
     ComparerWidget.h \
     threading/ImageProcessorJob.h \
     threading/ImageLoaderJob.h \
-    threading/ImageResizeJob.h
+    threading/ImageResizeJob.h \
+    threading/ImageDiffCalculatorJob.h
 
 unix:!symbian {
     maemo5 {

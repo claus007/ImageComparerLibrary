@@ -20,6 +20,7 @@ Copyright 2013 Claus Ilginnis <Claus@Ilginnis.de>
 #include "ImageResizeJob.h"
 #include <QImage>
 #include <QPainter>
+#include <QDebug>
 
 ImageResizeJob::ImageResizeJob() :
     ImageProcessorJob()
@@ -48,10 +49,10 @@ void ImageResizeJob::setImage(const QImage *image)
 
 void ImageResizeJob::run()
 {
+    qDebug() << "Resizing image to: " << _destSize;
     QImage * result=new QImage(_destSize,QImage::Format_ARGB32);
 
-    //TODO transparent
-    result->fill(Qt::white);
+    result->fill(Qt::transparent);
 
     QImage between=_image->scaled(_destSize,Qt::KeepAspectRatio,Qt::SmoothTransformation);
 

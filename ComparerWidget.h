@@ -37,18 +37,25 @@ public:
     ~ComparerWidget();
     
     QString originalImageFilename() const;
-    void setOriginalImageFilename(const QString &originalImageFilename);
-
     QString newImageFilename() const;
-    void setNewImageFilename(const QString &newImageFilename);
 
+    void adjustImagesToUI();
+    void setFilenames(const QString &originalImageFilename, const QString &newImageFilename);
+    void adjustImageBToUI();
+    void adjustImageAToUI();
+    void adjustImageCToUI();
 protected:
     virtual void resizeEvent(QResizeEvent *);
+    void calculateDiff();
 protected slots:
     void initialImageLoadADone(QImage * image);
     void initialImageLoadBDone(QImage * image);
+
+    void diffDone(QImage * image);
+
     void imageResizedADone(QImage * image);
     void imageResizedBDone(QImage * image);
+    void imageResizedCDone(QImage * image);
 private:
     Ui::ComparerWidget *ui;
 
@@ -58,11 +65,13 @@ private:
     QImage _originalImage;
     QImage _newImage;
 
-    QImage _resizedOriginalImage;
-    QImage _resizedNewImage;
+//    QImage _resizedOriginalImage;
+//    QImage _resizedNewImage;
 
     QImage _resultImage;
-    QImage _resizedResultImage;
+    //QImage _resizedResultImage;
+
+    int _missingImages;
 };
 
 #endif // COMPARERWIDGET_H
