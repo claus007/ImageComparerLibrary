@@ -23,6 +23,7 @@ Copyright 2013 Claus Ilginnis <Claus@Ilginnis.de>
 #include "threading/ImageResizeJob.h"
 #include "threading/ImageDiffCalculatorJob.h"
 #include <QThreadPool>
+#include <QDebug>
 
 ComparerWidget::ComparerWidget(QWidget *parent) :
     QWidget(parent),
@@ -78,6 +79,12 @@ void ComparerWidget::adjustImageCToUI()
     QThreadPool::globalInstance()->start(job);
 }
 
+void ComparerWidget::showEvent(QShowEvent *e)
+{
+    qDebug() << "Show Event";
+    QWidget::showEvent(e);
+}
+
 void ComparerWidget::adjustImagesToUI()
 {
     adjustImageAToUI();
@@ -87,6 +94,7 @@ void ComparerWidget::adjustImagesToUI()
 
 void ComparerWidget::resizeEvent(QResizeEvent *p)
 {
+    qDebug() << "Resize event";
     QWidget::resizeEvent(p);
     // wait until images are loaded
     while ( _originalImage.isNull() || _newImage.isNull() )

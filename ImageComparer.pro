@@ -9,7 +9,7 @@ QT       += core svg
 TARGET = ImageComparer
 TEMPLATE = lib
 
-#CONFIG = staticlib
+CONFIG += staticlib
 
 DEFINES += IMAGECOMPARER_LIBRARY
 

@@ -18,15 +18,54 @@ Copyright 2013 Claus Ilginnis <Claus@Ilginnis.de>
 */
 
 #include "ImageDiffCalculatorJob.h"
+#include <QPixmap>
+#include <QPainter>
+#include <QImage>
+#include <QColor>
+#include <QRgb>
 
 ImageDiffCalculatorJob::ImageDiffCalculatorJob() :
     ImageProcessorJob()
 {
 }
 
+void ImageDiffCalculatorJob::returnErrorImage()
+{
+    QImage * image=new QImage(400,300,QImage::Format_ARGB32);
+    image->fill(Qt::darkRed);
+    emit done(image);
+}
+
 void ImageDiffCalculatorJob::run()
 {
-    emit done(new QImage(":/images/file_broken.png"));
+    QImage * workspace=new QImage();
+    *workspace=*_originalImage;
+
+    QImage myNewImage=_newImage->scaled( workspace->size(),Qt::KeepAspectRatio);
+
+    QPoint p1(workspace->size().width()/2-myNewImage.size().width()/2,
+             workspace->size().height()/2-myNewImage.size().height()/2);
+    QPoint p2(p1.x()+myNewImage.size().width(),
+              p1.y()+myNewImage.size().height());
+
+    // now do the diff
+    for ( int x = 0 ; x < myNewImage.size().width() ; x++ )
+    {
+        for ( int y = 0 ; y < myNewImage.size().height() ; y++)
+        {
+            QPoint position(x,y);
+            QRgb rgb=workspace->pixel(p1+position);
+            QRgb rgb2=myNewImage.pixel(position);
+
+            QRgb rgb3= qRgb( abs(qRed( rgb ) - qRed(rgb2 )),
+                             abs(qGreen( rgb ) - qGreen(rgb2 )),
+                             abs(qBlue( rgb ) - qBlue(rgb2 )) );
+
+            workspace->setPixel(p1+position, rgb3);
+        }
+    }
+
+    emit done(workspace);
 }
 
 QImage *ImageDiffCalculatorJob::newImage() const

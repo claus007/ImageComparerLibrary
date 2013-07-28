@@ -27,6 +27,7 @@ class ComparerWidget;
 }
 
 class QResizeEvent;
+class QShowEvent;
 
 class ComparerWidget : public QWidget
 {
@@ -45,6 +46,7 @@ public:
     void adjustImageAToUI();
     void adjustImageCToUI();
 protected:
+    virtual void showEvent(QShowEvent *);
     virtual void resizeEvent(QResizeEvent *);
     void calculateDiff();
 protected slots:

@@ -38,6 +38,7 @@ public:
     QImage *newImage() const;
     void setNewImage(QImage *newImage);
 
+    void returnErrorImage();
 protected:
     QImage * _originalImage;
     QImage * _newImage;
