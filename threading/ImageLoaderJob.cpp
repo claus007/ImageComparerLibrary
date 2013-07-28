@@ -43,7 +43,7 @@ void ImageLoaderJob::run()
     {
         qDebug() << "Image NOT loaded: " << _fileName;
         delete newImage;
-        emit done(NULL);
+        emit done( NULL );
         return;
     }
 
